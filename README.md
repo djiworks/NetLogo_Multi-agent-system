@@ -1,7 +1,7 @@
 Ant labyrinth simulation
 ==========================
 
-This software consists on simulating an behavior to find the exit in a labyrinth. This case is used to learn NetLogo Software on a Multi Agent System.
+This software consists on simulating a behavior to find the exit in a labyrinth. This use case is made to learn NetLogo Software on a Multi Agent System.
 
 Building...
 V0.1: Make a simple model with simple start and end points, one ant family. (OK)
