@@ -64,9 +64,10 @@ end
 
 to move-turtles
   ask turtles [
-    right random 360
-    forward 1
-    set energy energy - 1  ;; when the turtle moves it looses one unit of energy
+     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 
+     [right random 360]
+     [forward 1]
+  set energy energy - 1  ;; when the turtle moves it looses one unit of energy
   if show-energy
     [ set label energy ] ;; the label is set to be the value of the energy
   ]
@@ -78,10 +79,16 @@ to check-death
   ]
 end
 
+to check-arrival
+   ask turtles [
+     if pcolor = 15 [die]
+   ]
+end
+
 ;;/************************** Global functions ************************************/
 to go
-  if ticks >= 500 [ stop ] ;; stop after 500 ticks
   move-turtles
+  check-arrival
   check-death
   tick ;; increment the tick counter and update the plot
 end
@@ -114,10 +121,10 @@ ticks
 30.0
 
 BUTTON
-28
-106
-157
-139
+27
+152
+156
+185
 Setup
 setup
 NIL
@@ -131,10 +138,10 @@ NIL
 1
 
 SLIDER
-11
-64
-183
-97
+10
+110
+182
+143
 turtles_number
 turtles_number
 1
@@ -146,10 +153,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-55
-153
-118
-186
+54
+199
+117
+232
 Go
 go
 T
@@ -169,9 +176,26 @@ SWITCH
 54
 show-energy
 show-energy
-1
+0
 1
 -1000
+
+BUTTON
+42
+66
+150
+99
+Trace tracks
+pen-down
+NIL
+1
+T
+TURTLE
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
