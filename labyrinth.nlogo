@@ -1,5 +1,10 @@
-globals [ patch-data ]
+globals [
+  patch-data
+  arrivalA
+  arrivalB
+  ]
 turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
+
 
 to setup
   clear-all
@@ -53,6 +58,8 @@ end
 
 ;;/************************** Setting for turtles ************************************/
 to setup-turtles
+  set arrivalA 0
+   set arrivalB 0
   create-turtles turtles_number ;; uses the value of the turtles_number slider to create turtles
   ask turtles [ 
     setxy -7 -17
@@ -64,7 +71,7 @@ end
 
 to move-turtles
   ask turtles [
-     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 
+     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 or [ pcolor ] of patch-ahead 1 = 64
      [right random 360]
      [forward 1]
   set energy energy - 1  ;; when the turtle moves it looses one unit of energy
@@ -81,7 +88,14 @@ end
 
 to check-arrival
    ask turtles [
-     if pcolor = 15 [die]
+     if pcolor = 15 [
+       set arrivalA arrivalA + 1
+       die
+       ]
+     if pcolor = 16 [
+       set arrivalB arrivalB + 1
+       die
+       ]
    ]
 end
 
@@ -94,9 +108,9 @@ to go
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
+224
 10
-710
+724
 531
 17
 17
@@ -146,7 +160,7 @@ turtles_number
 turtles_number
 1
 100
-100
+99
 1
 1
 NIL
@@ -176,7 +190,7 @@ SWITCH
 54
 show-energy
 show-energy
-0
+1
 1
 -1000
 
@@ -196,6 +210,28 @@ NIL
 NIL
 NIL
 1
+
+MONITOR
+748
+17
+812
+62
+ArrivalA
+arrivalA
+17
+1
+11
+
+MONITOR
+822
+17
+884
+62
+ArrivalB
+arrivalB
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
