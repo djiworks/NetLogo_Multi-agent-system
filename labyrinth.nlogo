@@ -1,9 +1,18 @@
 globals [ patch-data ]
+turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
 
+to setup
+  clear-all
+  load-patch-data
+  setup-turtles
+  reset-ticks
+end
+
+
+;;/************************** Setting for pacthes ************************************/
 ;; This procedure loads in patch data from a file.  The format of the file is: pxcor
 ;; pycor pcolor.  You can view the file by opening the file PatchData.txt
 to load-patch-data
-
   ;; We check to make sure the file exists first
   ifelse ( file-exists? "PatchData.txt" )
   [
@@ -31,27 +40,6 @@ to load-patch-data
   [ user-message "There is no PatchData.txt file in current directory!" ]
 end
 
-;; This procedure does the same thing as the above one, except it lets the user choose
-;; the file to load from.  Note that we need to check that it isn't false.  This because
-;; it will return false if the user cancels the file dialog.  There is currently only
-;; one file to load from, but you can create your own using the function save-patch-data
-;; near the bottom which saves all the current patches into a file.
-;to load-own-patch-data
- ; let file user-file
-
-  ;if ( file != false )
-  ;[
-   ; set patch-data []
-    ;file-open file
-
-    ;while [ not file-at-end? ]
-     ; [ set patch-data sentence patch-data (list (list file-read file-read file-read)) ]
-
-  ;  user-message "File loading complete!"
-   ; file-close
-  ;]
-;end
-
 ;; This procedure will use the loaded in patch data to color the patches.
 ;; The list is a list of three-tuples where the first item is the pxcor, the
 ;; second is the pycor, and the third is pcolor. Ex. [ [ 0 0 5 ] [ 1 34 26 ] ... ]
@@ -62,24 +50,41 @@ to show-patch-data
     [ user-message "You need to load in patch data first!" ]
 end
 
-;; This is the procedure that was used to create the file "File IO Patch Data.txt".
-;; You can also use it to create your own files.  See File Output code example for more
-;; details on File Output.
-;to save-patch-data
- ; let file user-new-file
-;
- ; if ( file != false )
-  ;[
-   ; file-write file
-    ;ask patches
-    ;[
-     ; file-write pxcor
-      ;file-write pycor
-      ;file-write pcolor
-    ;]
-    ;file-close
-  ;]
-;end
+
+;;/************************** Setting for turtles ************************************/
+to setup-turtles
+  create-turtles turtles_number ;; uses the value of the turtles_number slider to create turtles
+  ask turtles [ 
+    setxy -7 -17
+    set energy 1000
+    set shape "bug" 
+    set color yellow
+    ]
+end
+
+to move-turtles
+  ask turtles [
+    right random 360
+    forward 1
+    set energy energy - 1  ;; when the turtle moves it looses one unit of energy
+  if show-energy
+    [ set label energy ] ;; the label is set to be the value of the energy
+  ]
+end
+
+to check-death
+  ask turtles [
+    if energy <= 0 [ die ] ;; removes the turtle if it has no energy left
+  ]
+end
+
+;;/************************** Global functions ************************************/
+to go
+  if ticks >= 500 [ stop ] ;; stop after 500 ticks
+  move-turtles
+  check-death
+  tick ;; increment the tick counter and update the plot
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -95,26 +100,26 @@ GRAPHICS-WINDOW
 1
 1
 0
-1
-1
+0
+0
 1
 -17
 17
 -17
 17
-0
-0
+1
+1
 1
 ticks
 30.0
 
 BUTTON
-21
-37
-150
-70
-Load patch data
-load-patch-data
+28
+106
+157
+139
+Setup
+setup
 NIL
 1
 T
@@ -124,6 +129,49 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+11
+64
+183
+97
+turtles_number
+turtles_number
+1
+100
+100
+1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+55
+153
+118
+186
+Go
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SWITCH
+30
+21
+169
+54
+show-energy
+show-energy
+1
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
