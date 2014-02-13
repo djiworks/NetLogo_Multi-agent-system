@@ -69,9 +69,9 @@ to setup-turtles
     ]
 end
 
-to move-turtles
+to move-turtles ;9.999: white 64:green 95:blue 25:orange
   ask turtles [
-     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 or [ pcolor ] of patch-ahead 1 = 64
+     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 or [ pcolor ] of patch-ahead 1 = 64 or [ pcolor ] of patch-ahead 1 = 95
      [right random 360]
      [forward 1]
   set energy energy - 1  ;; when the turtle moves it looses one unit of energy
@@ -212,10 +212,10 @@ NIL
 1
 
 MONITOR
-748
-17
-812
-62
+732
+63
+796
+108
 ArrivalA
 arrivalA
 17
@@ -223,10 +223,10 @@ arrivalA
 11
 
 MONITOR
-822
-17
-884
-62
+735
+484
+797
+529
 ArrivalB
 arrivalB
 17
