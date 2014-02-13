@@ -19,14 +19,16 @@ end
 ;; pycor pcolor.  You can view the file by opening the file PatchData.txt
 to load-patch-data
   ;; We check to make sure the file exists first
-  ifelse ( file-exists? "PatchData.txt" )
+  ifelse ( file-exists? "PatchData.txt" and  file-exists? "PatchDataSimple.txt")
   [
     ;; We are saving the data into a list, so it only needs to be loaded once.
     set patch-data []
 
     ;; This opens the file, so we can use it.
-    file-open "PatchData.txt"
-
+    ifelse show-signals
+    [file-open "PatchData.txt"]
+    [file-open "PatchDataSimple.txt"]
+    
     ;; Read in all the data in the file
     while [ not file-at-end? ]
     [
@@ -42,7 +44,7 @@ to load-patch-data
     file-close
     show-patch-data
   ]
-  [ user-message "There is no PatchData.txt file in current directory!" ]
+  [ user-message "There is no PatchData.txt or PatchDataSimple.txt file in current directory!" ]
 end
 
 ;; This procedure will use the loaded in patch data to color the patches.
@@ -136,9 +138,9 @@ ticks
 
 BUTTON
 27
-152
+203
 156
-185
+236
 Setup
 setup
 NIL
@@ -153,9 +155,9 @@ NIL
 
 SLIDER
 10
-110
+161
 182
-143
+194
 turtles_number
 turtles_number
 1
@@ -168,9 +170,9 @@ HORIZONTAL
 
 BUTTON
 54
-199
+250
 117
-232
+283
 Go
 go
 T
@@ -196,9 +198,9 @@ show-energy
 
 BUTTON
 42
-66
+117
 150
-99
+150
 Trace tracks
 pen-down
 NIL
@@ -232,6 +234,17 @@ arrivalB
 17
 1
 11
+
+SWITCH
+30
+64
+170
+97
+show-signals
+show-signals
+1
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
