@@ -73,9 +73,46 @@ end
 
 to move-turtles ;9.999: white 64:green 95:blue 25:orange
   ask turtles [
-     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 or [ pcolor ] of patch-ahead 1 = 64 or [ pcolor ] of patch-ahead 1 = 95
+     ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 or [ pcolor ] of patch-ahead 1 = 64
      [right random 360]
-     [forward 1]
+     [ifelse [ pcolor ] of patch-ahead 1 = 95
+       [
+         if [pxcor] of patch-ahead 1 = -17 and [pycor] of patch-ahead 1 = -7
+         [ask turtles-here
+           [
+             setxy -16 -4 
+             right random 360
+           ]
+         ]
+         
+         if [pxcor] of patch-ahead 1 = -8 and [pycor] of patch-ahead 1 = -10
+         [ask turtles-here
+           [
+             ;setxy -7 -17 use for test
+             setxy -5 -10
+             right random 360
+           ]
+         ]
+         
+         if [pxcor] of patch-ahead 1 = 9 and [pycor] of patch-ahead 1 = -13
+         [ask turtles-here
+           [
+             setxy 13 -13
+             right random 360
+           ]
+         ]
+         
+         if [pxcor] of patch-ahead 1 = 17 and [pycor] of patch-ahead 1 = -14
+         [ask turtles-here
+           [
+             setxy 14 -14
+             right random 360
+           ]
+         ]
+                  
+       ]
+       [forward 1]
+     ]
   set energy energy - 1  ;; when the turtle moves it looses one unit of energy
   if show-energy
     [ set label energy ] ;; the label is set to be the value of the energy
@@ -161,8 +198,8 @@ SLIDER
 turtles_number
 turtles_number
 1
-100
-99
+1000
+860
 1
 1
 NIL
@@ -242,7 +279,7 @@ SWITCH
 97
 show-signals
 show-signals
-1
+0
 1
 -1000
 
