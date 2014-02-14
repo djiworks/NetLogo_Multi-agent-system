@@ -109,6 +109,22 @@ to move-turtles ;9.999: white 64:green 95:blue 25:orange
              right random 360
            ]
          ]
+         
+         if [pxcor] of patch-ahead 1 = 17 and [pycor] of patch-ahead 1 = 0
+         [ask turtles-here
+           [
+             setxy 16 -3
+             right random 360
+           ]
+         ]
+         
+         if [pxcor] of patch-ahead 1 = 8 and [pycor] of patch-ahead 1 = 17
+         [ask turtles-here
+           [
+             setxy 11 16
+             right random 360
+           ]
+         ]
                   
        ]
        [forward 1]
