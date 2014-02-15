@@ -297,10 +297,10 @@ show-signals
 -1000
 
 PLOT
-18
-546
-292
-764
+848
+29
+1122
+247
 Total arrival
 Time
 Arrival
@@ -316,10 +316,10 @@ PENS
 "pen-1" 1.0 0 -15040220 true "" "plot arrivalB"
 
 PLOT
-315
-546
-598
-768
+848
+261
+1121
+483
 Population evolution in time
 Time
 Number of turtles in the path
