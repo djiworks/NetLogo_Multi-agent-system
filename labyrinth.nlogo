@@ -218,7 +218,7 @@ turtles_number
 turtles_number
 1
 1000
-33
+739
 1
 1
 NIL
@@ -302,10 +302,50 @@ show-signals
 1
 -1000
 
+PLOT
+18
+546
+292
+764
+Total arrival
+Time
+Arrival
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -3844592 true "" "plot arrivalA"
+"pen-1" 1.0 0 -15040220 true "" "plot arrivalB"
+
+PLOT
+315
+546
+598
+768
+Population evolution in time
+Time
+Number of turtles in the path
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles"
+"pen-1" 1.0 0 -7858858 true "" "plot count (arrivalA + arrivalB)"
+
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This model show agents' behaviour on how to find the exit in a labyrynth.
+We are expecting to see the influence of guiding sight in the path.
+At the same time, we can see that the shorter path is not always the easier one, and that sometime a longer path with few angles is better than a shorter one with lots of angles.
 
 ## HOW IT WORKS
 
@@ -313,7 +353,9 @@ show-signals
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+The buttons in the Interface are defined as follows:
+
+- setup: This clears the environment and loads a new image
 
 ## THINGS TO NOTICE
 
@@ -325,7 +367,9 @@ show-signals
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+This model is base model.
+Try modifying the model so that it allows the user to experience other behaviours.
+
 
 ## NETLOGO FEATURES
 
@@ -337,7 +381,9 @@ show-signals
 
 ## CREDITS AND REFERENCES
 
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+This model was created by Djothi Grondin and Allan Lauret.
+
+To refer to this model in publications, please name the contributors.
 @#$#@#$#@
 default
 true
