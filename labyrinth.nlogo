@@ -80,8 +80,8 @@ to move-turtles ;9.999: white 64:green 95:blue 25:orange
          if [pxcor] of patch-ahead 1 = -17 and [pycor] of patch-ahead 1 = -7
          [ask turtles-here
            [
-             setxy -16 -4 
-             right random 360
+             move-to one-of patches with [pxcor = -16 and pycor = 16 ]
+             facexy -15 16
            ]
          ]
          
@@ -89,40 +89,43 @@ to move-turtles ;9.999: white 64:green 95:blue 25:orange
          [ask turtles-here
            [
              ;setxy -7 -17 use for test
-             setxy -5 -10
-             right random 360
+;             setxy -5 -10
+;             right random 360
+             set color green
+             move-to one-of patches with [pxcor = -5 and pycor = -10 ]
+             facexy -4 -10
            ]
          ]
          
          if [pxcor] of patch-ahead 1 = 9 and [pycor] of patch-ahead 1 = -13
          [ask turtles-here
            [
-             setxy 13 -13
-             right random 360
+;             setxy 13 -13
+;             right random 360
            ]
          ]
          
          if [pxcor] of patch-ahead 1 = 17 and [pycor] of patch-ahead 1 = -14
          [ask turtles-here
            [
-             setxy 14 -14
-             right random 360
+;             setxy 14 -14
+;             right random 360
            ]
          ]
          
          if [pxcor] of patch-ahead 1 = 17 and [pycor] of patch-ahead 1 = 0
          [ask turtles-here
            [
-             setxy 16 -3
-             right random 360
+;             setxy 16 -3
+;             right random 360
            ]
          ]
          
          if [pxcor] of patch-ahead 1 = 8 and [pycor] of patch-ahead 1 = 17
          [ask turtles-here
            [
-             setxy 11 16
-             right random 360
+;             setxy 11 16
+;             right random 360
            ]
          ]
                   
@@ -215,7 +218,7 @@ turtles_number
 turtles_number
 1
 1000
-860
+33
 1
 1
 NIL
