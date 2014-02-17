@@ -13,4 +13,4 @@ V0.2.1: Add ant signal to send information between ants (informing neighbors)
 
 V0.3: Add a second family (one with random movements to the right and the second one to the left).
 
-V0.3: Add stats control and final comments on the code
+V0.3.1: Add stats control and final comments on the code
