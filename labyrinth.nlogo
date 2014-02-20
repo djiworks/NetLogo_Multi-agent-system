@@ -5,8 +5,10 @@ globals [
   arrivalA
   ;Observer on exit B
   arrivalB
+  ;Observer on ants death because of poison
   subitdeathnb
-  normaldeathnb
+  ;Observer on ants death because of normal reason
+  normdeathnb
   ;Arrival mark
   following
   show-energy?
@@ -19,7 +21,7 @@ to setup
   ;Load the env
   load-patch-data
   ;Setting up random patch
-  regrow-grass
+  regrow-env
   ;Config agent
   setup-turtles
   reset-ticks
@@ -72,9 +74,9 @@ end
 
 
 
-to regrow-grass  ;; patch procedure
+to regrow-env  ;; patch procedure
 ;Create random grass 
-  repeat 15 [
+  repeat 10 [
     ask patch random-pxcor random-pycor [
       if regrow_grass and pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95 and  random-float 1000 < grass-grow-rate
       [set pcolor orange]
@@ -92,7 +94,9 @@ end
 ;;/************************** Setting for turtles ************************************/
 to setup-turtles
   set arrivalA 0
-   set arrivalB 0
+  set arrivalB 0
+  set normdeathnb 0
+  set subitdeathnb 0
   create-turtles turtles_number ;; uses the value of the turtles_number slider to create turtles
   ask turtles [ 
     ;Entrance
@@ -179,8 +183,10 @@ end
 
 to check-death
   ask turtles [
-    if energy <= 0 [ die ] ;; removes the turtle if it has no energy left
-    set normaldeathnb normaldeathnb + 1
+    if energy <= 0 [
+      set normdeathnb normdeathnb + 1
+      die 
+    ] ;; removes the turtle if it has no energy left
   ]
 end
 
@@ -189,9 +195,8 @@ to subitdeath
     if subit_death[
       if pcolor = violet [
         set pcolor black
-        ;; the value of energy of the agent is set to 0
-        set energy 0 
         set subitdeathnb subitdeathnb + 1
+        die
       ]
     ]
   ]
@@ -220,7 +225,7 @@ to go
   check-arrival
   subitdeath
   check-death
-  regrow-grass
+  regrow-env
   tick ;; increment the tick counter and update the plot
 end
 @#$#@#$#@
@@ -252,10 +257,10 @@ ticks
 30.0
 
 BUTTON
-30
-280
-159
-313
+26
+452
+155
+485
 Setup
 setup
 NIL
@@ -269,25 +274,25 @@ NIL
 1
 
 SLIDER
-13
-238
-185
-271
+9
+410
+181
+443
 turtles_number
 turtles_number
 1
 1000
-778
+1000
 1
 1
 NIL
 HORIZONTAL
 
 BUTTON
-57
-327
-120
-360
+53
+499
+116
+532
 Go
 go
 T
@@ -307,15 +312,15 @@ SWITCH
 54
 show-energy
 show-energy
-0
+1
 1
 -1000
 
 BUTTON
-45
-194
-153
-227
+41
+366
+149
+399
 Trace tracks
 pen-down
 NIL
@@ -387,7 +392,7 @@ PLOT
 483
 Population evolution in time
 Time
-Number of turtles in the path
+Turtles
 0.0
 10.0
 0.0
@@ -425,10 +430,10 @@ subit_death
 -1000
 
 SWITCH
-38
-401
-170
-434
+30
+189
+162
+222
 regrow_grass
 regrow_grass
 0
@@ -436,10 +441,10 @@ regrow_grass
 -1000
 
 SWITCH
-37
-444
-175
-477
+29
+232
+167
+265
 regrow_poison
 regrow_poison
 0
@@ -447,25 +452,25 @@ regrow_poison
 -1000
 
 SLIDER
-27
-506
-199
-539
+7
+271
+179
+304
 grass-grow-rate
 grass-grow-rate
 0
 100
-74
+100
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-27
-553
-199
-586
+7
+318
+179
+351
 poison-grow-rate
 poison-grow-rate
 0
@@ -477,23 +482,24 @@ NIL
 HORIZONTAL
 
 PLOT
-849
-503
-1126
-696
+1132
+275
+1409
+468
 Death evolution and cause
-number
-time
+Time
+Death
 0.0
 10.0
 0.0
 10.0
 true
-false
+true
 "" ""
 PENS
-"default" 1.0 0 -2674135 true "" "plot subitdeathnb"
-"pen-1" 1.0 0 -1184463 true "" "plot normaldeathnb"
+"Poison death" 1.0 0 -2674135 true "" "plot subitdeathnb"
+"Arrival death" 1.0 0 -1184463 true "" "plot arrivalA + arrivalB"
+"Normal death" 1.0 0 -13840069 true "" "plot normdeathnb"
 
 @#$#@#$#@
 ## WHAT IS IT?
