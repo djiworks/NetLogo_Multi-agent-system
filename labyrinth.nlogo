@@ -191,7 +191,7 @@ end
 
 to subitdeath
   ask turtles [
-    if subit_death[
+    if sudden-death[
       if pcolor = violet [
         set pcolor black
         set subitdeathnb subitdeathnb + 1
@@ -432,10 +432,10 @@ HORIZONTAL
 SWITCH
 38
 190
-159
+171
 223
-subit_death
-subit_death
+sudden-death
+sudden-death
 0
 1
 -1000
@@ -493,10 +493,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1132
-275
-1409
-468
+848
+498
+1125
+691
 Death evolution and cause
 Time
 Death
@@ -519,38 +519,51 @@ SWITCH
 49
 survivor-mode
 survivor-mode
-1
+0
 1
 -1000
+
+MONITOR
+348
+551
+480
+596
+Total number of survivors
+arrivalA + arrivalB
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
 
-This model shows agents' behaviour on how to find the exit in a labyrynth.
+This model shows agents' behaviour on how to find the exit in a labyrinth.
 We are expecting to see the influence of guiding sign in the path.
 
 At the same time, we can see that the shorter path is not always the easier one, and that sometime a longer path with few angles is better than a shorter one with lots of angles.
-
+We can had poisoning path and grass path in order to change dynamically the environment in which the agent evolve.
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+The ants are left on the patch, at the bottom middle. Then they will try to find one of the 2 exits. 
+As soon as they move, they will lose energy, but they will also be able to eat sugar (orange) on the way to get stamina. But they can also be poisoned (violet). 
+These events are randomly generated and user can play ith the different parameters to see the influence on monitors and plots.
 
 ## HOW TO USE IT
 
 The buttons in the Interface are defined as follows:
 
-- setup: This clears the environment and loads a new image
-- You can define the number of agent in the envirnomment with the related slider.
+- Setup: This clears the environment and loads a new image
+- You can define the number of agent in the environment with the related slider.
 - You can turn sign on or off with the related button
 - You can show the energy each agent has with the related button
-- Trace tracks will allow the user to see the tracks left by the agents, it is usefull if you want to know the exploration rate of your path
-- Arrival A and B will count the number of agents that arrived at the corresponding exit ( two exits on this model, but you can add more if you want)
+- Trace tracks will allow the user to see the tracks left by the agents, it is useful if you want to know the exploration rate of your path
+- Arrival A and B will count the number of agents that arrived at the corresponding exit (two exits on this model, but you can add more if you want)
 - 2 graphs can show you the evolution of the population in time and also how many agent found the exit.
-- the subit death is the case an agent has been poisoning
+- The sudden death is the case an agent has been poisoning in the map
 
 ## THINGS TO NOTICE
 
-You can see the behaviour of the agents in the labyrynth, the influence of the guiding sign.
+You can see the behaviour of the agents in the labyrinth, the influence of the guiding sign.
 
 ## THINGS TO TRY
 
@@ -561,16 +574,14 @@ You can see the behaviour of the agents in the labyrynth, the influence of the g
 
 This model is a basic model we created in order to better understand the multiagent systems. Of course, you can do it better and add much more features ;-)
 
-Try modifying the model so that it allows the user to experience other behaviours. There a re so manys things to do with it, let's your imagination do the rest ;-)
+Try modifying the model so that it allows the user to experience other behaviours. There are so many things to do with it, let's your imagination do the rest ;-)
 
 
-## NETLOGO FEATURES
-
--
 
 ## RELATED MODELS
 
-This model uses some functionnalities that you may also find in the "Ants line" or "Sheep and Wolves" models. 
+This model uses some functionalities that you may also find in the "Ants line" or "Sheep and Wolves" models. 
+We have adapted the behaviour to our application for our needs.
 
 
 ## CREDITS AND REFERENCES
@@ -578,7 +589,7 @@ This model uses some functionnalities that you may also find in the "Ants line" 
 This model was created by Djothi Grondin and Allan Lauret.
 
 To refer to this model in publications, please name the contributors.
-Thanks !
+Thanks!
 @#$#@#$#@
 default
 true
