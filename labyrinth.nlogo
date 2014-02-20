@@ -5,8 +5,8 @@ globals [
   arrivalA
   ;Observer on exit B
   arrivalB
-  ;Arrival mark
-  following
+  
+  show-energy?
   ]
 turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
 
@@ -15,13 +15,17 @@ to setup
   clear-all
   ;Load the env
   load-patch-data
+  ; create random grass 
+  repeat 100 [ask patch random-pxcor random-pycor [set pcolor green]] 
+    ; create random poison 
+  repeat 10 [ask patch random-pxcor random-pycor [set pcolor violet]] 
   ;Config agent
   setup-turtles
   reset-ticks
 end
 
 
-;;/************************** Setting for pacthes ************************************/
+;;/************************** Setting for patches ************************************/
 ;; This procedure loads in patch data from a file.  The format of the file is: pxcor
 ;; pycor pcolor.  You can view the file by opening the file PatchData.txt
 to load-patch-data
@@ -65,14 +69,44 @@ to show-patch-data
     [ user-message "You need to load in patch data first!" ]
 end
 
-to grow-grass
+
+
+
+to eat-grass
+  ask turtles [
+    if pcolor = green [
+      set pcolor black
+           ;; the value of energy-from-grass slider is added to energy
+      set energy energy + energy-from-grass
+    ]
+
+  ]
+end
+
+
+to regrow-grass  ;; patch procedure
+
   
 end
 
 
+to subitdeath
+  ask turtles [
+  if subit_death[
+  if pcolor = violet [
+      set pcolor black
+           ;; the value of energy of the agent is set to 0
+      set energy 0 
+    ]
+  ]
+  ]
+end
+
+
+
+
 ;;/************************** Setting for turtles ************************************/
 to setup-turtles
-  set following false
   set arrivalA 0
    set arrivalB 0
   create-turtles turtles_number ;; uses the value of the turtles_number slider to create turtles
@@ -159,23 +193,24 @@ to check-arrival
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
-       set following true
        die
        ]
      if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
-       set following true
        die
        ]
    ]
 end
+
 
 ;;/************************** Global functions ************************************/
 to go
   move-turtles
   check-arrival
   check-death
-  grow-grass
+subitdeath
+  eat-grass
+  regrow-grass
   tick ;; increment the tick counter and update the plot
 end
 @#$#@#$#@
@@ -354,6 +389,32 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot count turtles"
 "pen-1" 1.0 0 -7858858 true "" "plot count (arrivalA + arrivalB)"
 
+SLIDER
+14
+328
+186
+361
+energy-from-grass
+energy-from-grass
+0
+2000
+501
+1
+1
+NIL
+HORIZONTAL
+
+SWITCH
+39
+430
+160
+463
+subit_death
+subit_death
+1
+1
+-1000
+
 @#$#@#$#@
 ## WHAT IS IT?
 
@@ -377,6 +438,7 @@ The buttons in the Interface are defined as follows:
 - Trace tracks will allow the user to see the tracks left by the agents, it is usefull if you want to know the exploration rate of your path
 - Arrival A and B will count the number of agents that arrived at the corresponding exit ( two exits on this model, but you can add more if you want)
 - 2 graphs can show you the evolution of the population in time and also how many agent found the exit.
+- the subit death is the case an agent has been poisoning
 
 ## THINGS TO NOTICE
 
