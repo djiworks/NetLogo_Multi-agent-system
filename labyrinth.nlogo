@@ -24,6 +24,7 @@ to setup
   regrow-env
   ;Config agent
   setup-turtles
+  set following false
   reset-ticks
 end
 
@@ -207,10 +208,12 @@ to check-arrival
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
+       set following true
        die
        ]
      if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
+       set following true
        die
        ]
    ]
@@ -219,7 +222,7 @@ end
 
 ;;/************************** Global functions ************************************/
 to go
-    if not any? turtles [ stop ]
+  if not any? turtles [ stop ]
   move-turtles
   eat-grass
   check-arrival
