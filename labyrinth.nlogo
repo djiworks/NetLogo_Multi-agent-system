@@ -352,8 +352,9 @@ PENS
 @#$#@#$#@
 ## WHAT IS IT?
 
-This model show agents' behaviour on how to find the exit in a labyrynth.
-We are expecting to see the influence of guiding sight in the path.
+This model shows agents' behaviour on how to find the exit in a labyrynth.
+We are expecting to see the influence of guiding sign in the path.
+
 At the same time, we can see that the shorter path is not always the easier one, and that sometime a longer path with few angles is better than a shorter one with lots of angles.
 
 ## HOW IT WORKS
@@ -365,34 +366,44 @@ At the same time, we can see that the shorter path is not always the easier one,
 The buttons in the Interface are defined as follows:
 
 - setup: This clears the environment and loads a new image
+- You can define the number of agent in the envirnomment with the related slider.
+- You can turn sign on or off with the related button
+- You can show the energy each agent has with the related button
+- Trace tracks will allow the user to see the tracks left by the agents, it is usefull if you want to know the exploration rate of your path
+- Arrival A and B will count the number of agents that arrived at the corresponding exit ( two exits on this model, but you can add more if you want)
+- 2 graphs can show you the evolution of the population in time and also how many agent found the exit.
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
+You can see the behaviour of the agents in the labyrynth, the influence of the guiding sign.
 
 ## THINGS TO TRY
 
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+- Add more agents to see their behaviour
+- Add or remove grass to see the influence on the simulation and death rate
 
 ## EXTENDING THE MODEL
 
-This model is base model.
-Try modifying the model so that it allows the user to experience other behaviours.
+This model is a basic model we created in order to better understand the multiagent systems. Of course, you can do it better and add much more features ;-)
+
+Try modifying the model so that it allows the user to experience other behaviours. There a re so manys things to do with it, let's your imagination do the rest ;-)
 
 
 ## NETLOGO FEATURES
 
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+-
 
 ## RELATED MODELS
 
-(models in the NetLogo Models Library and elsewhere which are of related interest)
+This model uses some functionnalities that you may also find in the "Ants line" or "Sheep and Wolves" models. 
+
 
 ## CREDITS AND REFERENCES
 
 This model was created by Djothi Grondin and Allan Lauret.
 
 To refer to this model in publications, please name the contributors.
+Thanks !
 @#$#@#$#@
 default
 true
