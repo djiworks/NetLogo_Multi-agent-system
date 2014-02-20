@@ -13,4 +13,4 @@ V0.2.1: Add ant signal to send information between ants (only nearest ants is aw
 
 V0.3: Add a dynamic environment with food and poison randomly (OK)
 
-V0.3.1: Add stats control and final comments on the code
+V0.3.1: Add stats control and final comments on the code (OK)
