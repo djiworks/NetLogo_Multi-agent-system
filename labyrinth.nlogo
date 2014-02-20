@@ -5,6 +5,8 @@ globals [
   arrivalA
   ;Observer on exit B
   arrivalB
+  ;Arrival mark
+  following
   ]
 turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
 
@@ -70,6 +72,7 @@ end
 
 ;;/************************** Setting for turtles ************************************/
 to setup-turtles
+  set following false
   set arrivalA 0
    set arrivalB 0
   create-turtles turtles_number ;; uses the value of the turtles_number slider to create turtles
@@ -156,10 +159,12 @@ to check-arrival
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
+       set following true
        die
        ]
      if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
+       set following true
        die
        ]
    ]
