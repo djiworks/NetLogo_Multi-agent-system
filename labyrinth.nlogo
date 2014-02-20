@@ -382,11 +382,11 @@ Arrival
 0.0
 10.0
 true
-false
+true
 "" ""
 PENS
-"default" 1.0 0 -1184463 true "" "plot arrivalA"
-"pen-1" 1.0 0 -15040220 true "" "plot arrivalB"
+"Arrival to A" 1.0 0 -1184463 true "" "plot arrivalA"
+"Arrival to B" 1.0 0 -15040220 true "" "plot arrivalB"
 
 PLOT
 848
