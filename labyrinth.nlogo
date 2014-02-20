@@ -219,11 +219,19 @@ to check-arrival
    ]
 end
 
+to follow-leader
+  ask turtles [ 
+    face turtle (who - 1)
+    forward 1
+  ]
+end
 
 ;;/************************** Global functions ************************************/
 to go
   if not any? turtles [ stop ]
-  move-turtles
+  ifelse following = false
+  [move-turtles]
+  [follow-leader]
   eat-grass
   check-arrival
   subitdeath
