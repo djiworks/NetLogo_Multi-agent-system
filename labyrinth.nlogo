@@ -156,23 +156,14 @@ to check-arrival
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
-       ;inform
        die
        ]
      if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
-      ; inform
        die
        ]
    ]
 end
-
-;to inform
-;  ask turtles-on neighbors [
-;   set heading towards myself
-;   set color red
-;  ]
-;end
 
 ;;/************************** Global functions ************************************/
 to go
