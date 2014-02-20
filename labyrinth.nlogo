@@ -1,6 +1,9 @@
 globals [
+  ;Store environment config
   patch-data
+  ;Observer on exit A
   arrivalA
+  ;Observer on exit B
   arrivalB
   ]
 turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
@@ -8,7 +11,9 @@ turtles-own [energy] ;; for keeping track of when the turtle is ready and when i
 
 to setup
   clear-all
+  ;Load the env
   load-patch-data
+  ;Config agent
   setup-turtles
   reset-ticks
 end
@@ -25,7 +30,7 @@ to load-patch-data
     set patch-data []
 
     ;; This opens the file, so we can use it.
-    ifelse show-signals
+    ifelse show-signals ;Select which map to use
     [file-open "PatchData.txt"]
     [file-open "PatchDataSimple.txt"]
     
@@ -42,6 +47,7 @@ to load-patch-data
 
     ;; Done reading in patch information.  Close the file.
     file-close
+    ;Fill in the map
     show-patch-data
   ]
   [ user-message "There is no PatchData.txt or PatchDataSimple.txt file in current directory!" ]
@@ -57,6 +63,10 @@ to show-patch-data
     [ user-message "You need to load in patch data first!" ]
 end
 
+to grow-grass
+  
+end
+
 
 ;;/************************** Setting for turtles ************************************/
 to setup-turtles
@@ -64,6 +74,7 @@ to setup-turtles
    set arrivalB 0
   create-turtles turtles_number ;; uses the value of the turtles_number slider to create turtles
   ask turtles [ 
+    ;Entrance
     setxy -7 -17
     set energy 1000
     set shape "bug" 
@@ -73,15 +84,17 @@ end
 
 to move-turtles ;9.999: white 64:green 95:blue 25:orange
   ask turtles [
+    ;check the color of the patch ahead ( 9.999 = white = wall, 64 = green = entrance)
      ifelse not is-patch? patch-ahead 1 or [ pcolor ] of patch-ahead 1 = 9.9999 or [ pcolor ] of patch-ahead 1 = 64
-     [right random 360]
+     [right random 360];Random orientatioin
+     ;if the patch is blue, so it's a signal. Each signal affects the orientation
      [ifelse [ pcolor ] of patch-ahead 1 = 95
        [
          if [pxcor] of patch-ahead 1 = -17 and [pycor] of patch-ahead 1 = -7
          [ask turtles-here
            [
-             move-to one-of patches with [pxcor = -16 and pycor = 16 ]
-             facexy -15 16
+             move-to one-of patches with [pxcor = -16 and pycor = 16 ];move the turtle to the defined point
+             facexy -15 16 ;put his head to the good direction
            ]
          ]
          
@@ -124,7 +137,7 @@ to move-turtles ;9.999: white 64:green 95:blue 25:orange
          ]
                   
        ]
-       [forward 1]
+       [forward 1];move forward 1 patch
      ]
   set energy energy - 1  ;; when the turtle moves it looses one unit of energy
   if show-energy
@@ -140,22 +153,33 @@ end
 
 to check-arrival
    ask turtles [
-     if pcolor = 15 [
+     ;if the turle is on one exit
+     if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
+       ;inform
        die
        ]
-     if pcolor = 16 [
+     if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
+      ; inform
        die
        ]
    ]
 end
+
+;to inform
+;  ask turtles-on neighbors [
+;   set heading towards myself
+;   set color red
+;  ]
+;end
 
 ;;/************************** Global functions ************************************/
 to go
   move-turtles
   check-arrival
   check-death
+  grow-grass
   tick ;; increment the tick counter and update the plot
 end
 @#$#@#$#@
