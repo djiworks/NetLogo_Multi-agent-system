@@ -5,6 +5,8 @@ globals [
   arrivalA
   ;Observer on exit B
   arrivalB
+  subitdeathnb
+  normaldeathnb
   ;Arrival mark
   following
   show-energy?
@@ -68,18 +70,20 @@ to show-patch-data
     [ user-message "You need to load in patch data first!" ]
 end
 
+
+
 to regrow-grass  ;; patch procedure
 ;Create random grass 
   repeat 15 [
     ask patch random-pxcor random-pycor [
-      if pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95
+      if regrow_grass and pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95 and  random-float 1000 < grass-grow-rate
       [set pcolor orange]
     ]  
   ] 
   ;Create random poison 
   repeat 5 [
     ask patch random-pxcor random-pycor [
-       if pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95
+       if regrow_poison and pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95 and  random-float 1000 < poison-grow-rate
        [set pcolor violet]
     ]
   ] 
@@ -176,6 +180,7 @@ end
 to check-death
   ask turtles [
     if energy <= 0 [ die ] ;; removes the turtle if it has no energy left
+    set normaldeathnb normaldeathnb + 1
   ]
 end
 
@@ -186,6 +191,7 @@ to subitdeath
         set pcolor black
         ;; the value of energy of the agent is set to 0
         set energy 0 
+        set subitdeathnb subitdeathnb + 1
       ]
     ]
   ]
@@ -208,6 +214,7 @@ end
 
 ;;/************************** Global functions ************************************/
 to go
+    if not any? turtles [ stop ]
   move-turtles
   eat-grass
   check-arrival
@@ -270,7 +277,7 @@ turtles_number
 turtles_number
 1
 1000
-96
+778
 1
 1
 NIL
@@ -370,7 +377,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -3844592 true "" "plot arrivalA"
+"default" 1.0 0 -1184463 true "" "plot arrivalA"
 "pen-1" 1.0 0 -15040220 true "" "plot arrivalB"
 
 PLOT
@@ -390,7 +397,6 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot count turtles"
-"pen-1" 1.0 0 -7858858 true "" "plot count (arrivalA + arrivalB)"
 
 SLIDER
 12
@@ -417,6 +423,77 @@ subit_death
 0
 1
 -1000
+
+SWITCH
+38
+401
+170
+434
+regrow_grass
+regrow_grass
+0
+1
+-1000
+
+SWITCH
+37
+444
+175
+477
+regrow_poison
+regrow_poison
+0
+1
+-1000
+
+SLIDER
+27
+506
+199
+539
+grass-grow-rate
+grass-grow-rate
+0
+100
+74
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+27
+553
+199
+586
+poison-grow-rate
+poison-grow-rate
+0
+100
+100
+1
+1
+NIL
+HORIZONTAL
+
+PLOT
+849
+503
+1126
+696
+Death evolution and cause
+number
+time
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -2674135 true "" "plot subitdeathnb"
+"pen-1" 1.0 0 -1184463 true "" "plot normaldeathnb"
 
 @#$#@#$#@
 ## WHAT IS IT?
