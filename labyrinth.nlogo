@@ -24,7 +24,7 @@ to setup
   regrow-env
   ;Config agent
   setup-turtles
-  set following false
+  set following nobody
   reset-ticks
 end
 
@@ -208,20 +208,20 @@ to check-arrival
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
-       set following true
-       die
+       set following self
+       ;die
        ]
      if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
-       set following true
-       die
+       set following self
+       ;die
        ]
    ]
 end
 
 to follow-leader
   ask turtles [ 
-    face turtle (who - 1)
+    face following
     forward 1
   ]
 end
@@ -229,7 +229,7 @@ end
 ;;/************************** Global functions ************************************/
 to go
   if not any? turtles [ stop ]
-  ifelse following = false
+  ifelse following = nobody
   [move-turtles]
   [follow-leader]
   eat-grass
