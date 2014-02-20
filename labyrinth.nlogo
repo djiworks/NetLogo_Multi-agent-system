@@ -5,7 +5,8 @@ globals [
   arrivalA
   ;Observer on exit B
   arrivalB
-  
+  ;Arrival mark
+  following
   show-energy?
   ]
 turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
@@ -15,10 +16,8 @@ to setup
   clear-all
   ;Load the env
   load-patch-data
-  ; create random grass 
-  repeat 100 [ask patch random-pxcor random-pycor [set pcolor green]] 
-    ; create random poison 
-  repeat 10 [ask patch random-pxcor random-pycor [set pcolor violet]] 
+  ;Setting up random patch
+  regrow-grass
   ;Config agent
   setup-turtles
   reset-ticks
@@ -69,41 +68,22 @@ to show-patch-data
     [ user-message "You need to load in patch data first!" ]
 end
 
-
-
-
-to eat-grass
-  ask turtles [
-    if pcolor = green [
-      set pcolor black
-           ;; the value of energy-from-grass slider is added to energy
-      set energy energy + energy-from-grass
-    ]
-
-  ]
-end
-
-
 to regrow-grass  ;; patch procedure
-
-  
-end
-
-
-to subitdeath
-  ask turtles [
-  if subit_death[
-  if pcolor = violet [
-      set pcolor black
-           ;; the value of energy of the agent is set to 0
-      set energy 0 
+;Create random grass 
+  repeat 15 [
+    ask patch random-pxcor random-pycor [
+      if pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95
+      [set pcolor orange]
+    ]  
+  ] 
+  ;Create random poison 
+  repeat 5 [
+    ask patch random-pxcor random-pycor [
+       if pcolor != 9.9999 and pcolor != 15 and pcolor != 16 and pcolor != 64 and pcolor != 95
+       [set pcolor violet]
     ]
-  ]
-  ]
+  ] 
 end
-
-
-
 
 ;;/************************** Setting for turtles ************************************/
 to setup-turtles
@@ -113,10 +93,21 @@ to setup-turtles
   ask turtles [ 
     ;Entrance
     setxy -7 -17
-    set energy 1000
+    set energy random 1000
     set shape "bug" 
     set color yellow
     ]
+end
+
+to eat-grass
+  ask turtles [
+    if pcolor = orange [
+      set pcolor black
+           ;; the value of energy-from-grass slider is added to energy
+      set energy energy + energy-from-grass
+    ]
+
+  ]
 end
 
 to move-turtles ;9.999: white 64:green 95:blue 25:orange
@@ -188,6 +179,18 @@ to check-death
   ]
 end
 
+to subitdeath
+  ask turtles [
+    if subit_death[
+      if pcolor = violet [
+        set pcolor black
+        ;; the value of energy of the agent is set to 0
+        set energy 0 
+      ]
+    ]
+  ]
+end
+
 to check-arrival
    ask turtles [
      ;if the turle is on one exit
@@ -206,10 +209,10 @@ end
 ;;/************************** Global functions ************************************/
 to go
   move-turtles
-  check-arrival
-  check-death
-subitdeath
   eat-grass
+  check-arrival
+  subitdeath
+  check-death
   regrow-grass
   tick ;; increment the tick counter and update the plot
 end
@@ -242,10 +245,10 @@ ticks
 30.0
 
 BUTTON
-27
-203
-156
-236
+30
+280
+159
+313
 Setup
 setup
 NIL
@@ -259,25 +262,25 @@ NIL
 1
 
 SLIDER
-10
-161
-182
-194
+13
+238
+185
+271
 turtles_number
 turtles_number
 1
 1000
-739
+96
 1
 1
 NIL
 HORIZONTAL
 
 BUTTON
-54
-250
-117
-283
+57
+327
+120
+360
 Go
 go
 T
@@ -297,15 +300,15 @@ SWITCH
 54
 show-energy
 show-energy
-1
+0
 1
 -1000
 
 BUTTON
-42
-117
-150
-150
+45
+194
+153
+227
 Trace tracks
 pen-down
 NIL
@@ -390,28 +393,28 @@ PENS
 "pen-1" 1.0 0 -7858858 true "" "plot count (arrivalA + arrivalB)"
 
 SLIDER
-14
-328
+12
+108
 186
-361
+141
 energy-from-grass
 energy-from-grass
-0
-2000
-501
+1
+100
+12
 1
 1
 NIL
 HORIZONTAL
 
 SWITCH
-39
-430
-160
-463
+37
+149
+158
+182
 subit_death
 subit_death
-1
+0
 1
 -1000
 
