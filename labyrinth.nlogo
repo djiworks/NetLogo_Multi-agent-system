@@ -9,10 +9,9 @@ globals [
   subitdeathnb
   ;Observer on ants death because of normal reason
   normdeathnb
-  ;Arrival mark
-  following
   show-energy?
   ]
+
 turtles-own [energy] ;; for keeping track of when the turtle is ready and when it will die
 
 
@@ -24,7 +23,6 @@ to setup
   regrow-env
   ;Config agent
   setup-turtles
-  set following nobody
   reset-ticks
 end
 
@@ -208,30 +206,32 @@ to check-arrival
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
        set arrivalA arrivalA + 1
-       set following self
-       ;die
+       if survivor-mode = false
+       [follow-leader self]
+       die
        ]
      if pcolor = 16 [ ;bright red
        set arrivalB arrivalB + 1
-       set following self
-       ;die
+       if survivor-mode = false
+       [follow-leader self]
+       die
        ]
    ]
 end
 
-to follow-leader
-  ask turtles [ 
-    face following
-    forward 1
+to follow-leader [leader]
+  ;Inform ants around 8 patches where is the end point
+  ask turtles-on neighbors [
+    face leader
+    if is-patch? patch-ahead 1 and [ pcolor ] of patch-ahead 1 != 9.9999 and [ pcolor ] of patch-ahead 1 != 64 and [ pcolor ] of patch-ahead 1 != 95
+    [forward 1]
   ]
 end
 
 ;;/************************** Global functions ************************************/
 to go
   if not any? turtles [ stop ]
-  ifelse following = nobody
-  [move-turtles]
-  [follow-leader]
+  move-turtles
   eat-grass
   check-arrival
   subitdeath
@@ -268,10 +268,10 @@ ticks
 30.0
 
 BUTTON
-26
-452
-155
-485
+29
+490
+158
+523
 Setup
 setup
 NIL
@@ -285,10 +285,10 @@ NIL
 1
 
 SLIDER
-9
-410
-181
-443
+12
+448
+184
+481
 turtles_number
 turtles_number
 1
@@ -300,10 +300,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-53
-499
-116
-532
+56
+537
+119
+570
 Go
 go
 T
@@ -317,10 +317,10 @@ NIL
 1
 
 SWITCH
-30
-21
-169
-54
+31
+62
+170
+95
 show-energy
 show-energy
 1
@@ -328,10 +328,10 @@ show-energy
 -1000
 
 BUTTON
-41
-366
-149
-399
+44
+404
+152
+437
 Trace tracks
 pen-down
 NIL
@@ -367,10 +367,10 @@ arrivalB
 11
 
 SWITCH
-30
-64
-170
-97
+31
+105
+171
+138
 show-signals
 show-signals
 0
@@ -415,10 +415,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot count turtles"
 
 SLIDER
-12
-108
-186
-141
+13
+149
+187
+182
 energy-from-grass
 energy-from-grass
 1
@@ -430,32 +430,32 @@ NIL
 HORIZONTAL
 
 SWITCH
-37
-149
-158
-182
+38
+190
+159
+223
 subit_death
 subit_death
+0
+1
+-1000
+
+SWITCH
+31
+230
+163
+263
+regrow_grass
+regrow_grass
 0
 1
 -1000
 
 SWITCH
 30
-189
-162
-222
-regrow_grass
-regrow_grass
-0
-1
--1000
-
-SWITCH
-29
-232
-167
-265
+273
+168
+306
 regrow_poison
 regrow_poison
 0
@@ -463,10 +463,10 @@ regrow_poison
 -1000
 
 SLIDER
-7
-271
-179
-304
+8
+312
+180
+345
 grass-grow-rate
 grass-grow-rate
 0
@@ -478,10 +478,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-7
-318
-179
-351
+8
+359
+180
+392
 poison-grow-rate
 poison-grow-rate
 0
@@ -511,6 +511,17 @@ PENS
 "Poison death" 1.0 0 -2674135 true "" "plot subitdeathnb"
 "Arrival death" 1.0 0 -1184463 true "" "plot arrivalA + arrivalB"
 "Normal death" 1.0 0 -13840069 true "" "plot normdeathnb"
+
+SWITCH
+27
+16
+177
+49
+survivor-mode
+survivor-mode
+1
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
