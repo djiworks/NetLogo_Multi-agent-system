@@ -1,5 +1,4 @@
-Ant labyrinth simulation 
-(Multi Agent System)
+Ant labyrinth simulation (Multi Agent System)
 ==========================
 
 This software has for aim the study of an ants’ colony behaviour to find the exit in a labyrinth. 
@@ -12,7 +11,7 @@ This model can be improved, the possibilities are numerous.
 
 
 Building history...
-
+==========================
 
 V0.1: Make a simple and basic model with only a start point and end points, one ant family. (OK)
 
