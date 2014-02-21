@@ -91,7 +91,7 @@ to regrow-env  ;; patch procedure
 end
 
 ;;/************************** Setting for turtles ************************************/
-to setup-turtles
+to setup-turtles ; initial setup
   set arrivalA 0
   set arrivalB 0
   set normdeathnb 0
@@ -106,7 +106,7 @@ to setup-turtles
     ]
 end
 
-to eat-grass
+to eat-grass ; the condition for an ant to get energy
   ask turtles [
     if pcolor = orange [
       set pcolor black
@@ -180,7 +180,7 @@ to move-turtles ;9.999: white 64:green 95:blue 25:orange
   ]
 end
 
-to check-death
+to check-death ; the death condition of an ant
   ask turtles [
     if energy <= 0 [
       set normdeathnb normdeathnb + 1
@@ -189,7 +189,7 @@ to check-death
   ]
 end
 
-to subitdeath
+to subitdeath ; sudden death conditions
   ask turtles [
     if sudden-death[
       if pcolor = violet [
@@ -201,7 +201,7 @@ to subitdeath
   ]
 end
 
-to check-arrival
+to check-arrival ; check arrival procedure
    ask turtles [
      ;if the turle is on one exit
      if pcolor = 15 [ ;deep red
@@ -220,7 +220,7 @@ to check-arrival
 end
 
 to follow-leader [leader]
-  ;Inform ants around 8 patches where is the end point
+  ;Inform ants around 8 patches where is the end point (for the signal between them)
   ask turtles-on neighbors [
     face leader
     if is-patch? patch-ahead 1 and [ pcolor ] of patch-ahead 1 != 9.9999 and [ pcolor ] of patch-ahead 1 != 64 and [ pcolor ] of patch-ahead 1 != 95
@@ -230,7 +230,7 @@ end
 
 ;;/************************** Global functions ************************************/
 to go
-  if not any? turtles [ stop ]
+  if not any? turtles [ stop ] ;stop the simulation when no ants anymore
   move-turtles
   eat-grass
   check-arrival
@@ -293,7 +293,7 @@ turtles_number
 turtles_number
 1
 1000
-1000
+504
 1
 1
 NIL
@@ -471,7 +471,7 @@ grass-grow-rate
 grass-grow-rate
 0
 100
-100
+67
 1
 1
 NIL
@@ -486,7 +486,7 @@ poison-grow-rate
 poison-grow-rate
 0
 100
-100
+15
 1
 1
 NIL
@@ -497,7 +497,7 @@ PLOT
 498
 1125
 691
-Death evolution and cause
+Death evolution and cause vs survivors
 Time
 Death
 0.0
@@ -509,7 +509,7 @@ true
 "" ""
 PENS
 "Poison death" 1.0 0 -2674135 true "" "plot subitdeathnb"
-"Arrival death" 1.0 0 -1184463 true "" "plot arrivalA + arrivalB"
+"Survivors" 1.0 0 -1184463 true "" "plot arrivalA + arrivalB"
 "Normal death" 1.0 0 -13840069 true "" "plot normdeathnb"
 
 SWITCH
@@ -524,12 +524,34 @@ survivor-mode
 -1000
 
 MONITOR
-348
-551
-480
-596
+403
+586
+535
+631
 Total number of survivors
 arrivalA + arrivalB
+17
+1
+11
+
+MONITOR
+403
+537
+535
+582
+Initial population
+turtles_number
+17
+1
+11
+
+MONITOR
+751
+646
+841
+691
+Sudden death
+subitdeathnb
 17
 1
 11
